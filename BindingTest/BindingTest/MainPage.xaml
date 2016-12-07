@@ -1,0 +1,62 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:BindingTest"
+             x:Class="BindingTest.MainPage">
+
+    <Grid
+        HorizontalOptions="FillAndExpand"
+        VerticalOptions="FillAndExpand">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height=".07*" />
+            <RowDefinition Height=".83*" />
+            <RowDefinition Height=".10*" />
+        </Grid.RowDefinitions>
+    
+	    <Label 
+            Grid.Row="0"
+            FontSize="Medium"
+            Text="PayHub IDTech Xamarin Bindings Example" 
+            HorizontalTextAlignment="Center" 
+            VerticalTextAlignment="Center"
+            VerticalOptions="Center" 
+            HorizontalOptions="Center" />
+
+        <ListView
+            x:Name="lvLogs"
+            Grid.Row="1"
+            HorizontalOptions="FillAndExpand"
+            VerticalOptions="FillAndExpand">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <Label Text="{Binding Message}" TextColor="#000" FontSize="Small" HorizontalTextAlignment="Start" VerticalTextAlignment="Center" VerticalOptions="CenterAndExpand"/>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        
+        <StackLayout
+            Grid.Row="2"
+            HorizontalOptions="CenterAndExpand"
+            VerticalOptions="FillAndExpand"
+            Orientation="Horizontal">
+
+            <Button
+                Text="Initialize"
+                Clicked="Initialize_Clicked"/>            
+            
+            <Button
+                Text="Swipe Card"
+                Clicked="SwipeCard_Clicked"/>
+
+            <Button 
+                Text="Clear Log" />
+            
+        </StackLayout>
+
+    </Grid>
+
+
+</ContentPage>
