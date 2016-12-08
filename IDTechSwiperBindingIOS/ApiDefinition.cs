@@ -2,6 +2,7 @@
 using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using ObjCRuntime;
 
 namespace IDTechSwiperBindingIOS
 {
@@ -58,9 +59,9 @@ namespace IDTechSwiperBindingIOS
         [Export("startUniMag:")]
         UmRet StartUniMag(bool start);
 
-        // -(UmRet)requestSwipe;
-        [Export("requestSwipe")]
-        UmRet RequestSwipe { get; }
+		// -(UmRet)requestSwipe;
+		[Export("requestSwipe")]
+		UmRet RequestSwipe();
 
         // -(NSData *)getFlagByte;
         [Export("getFlagByte")]
@@ -119,7 +120,8 @@ namespace IDTechSwiperBindingIOS
         UmRet SendCommandDisableForceEncryption { get; }
 
         // -(UmRet)sendCommandSetPrePAN:(NSInteger)prePAN;
-        UmRet SendCommandSetPrePAN(nint prePAN);
+        [Export("sendCommandSetPrePAN")]
+		UmRet SendCommandSetPrePAN { get; }
 
         // -(UmRet)sendCommandClearBuffer;
         [Export("sendCommandClearBuffer")]
@@ -185,5 +187,7 @@ namespace IDTechSwiperBindingIOS
         // -(BOOL)setCmdTimeoutDuration:(NSInteger)seconds;
         [Export("setCmdTimeoutDuration:")]
         bool SetCmdTimeoutDuration(nint seconds);
+
+
     }
 }
