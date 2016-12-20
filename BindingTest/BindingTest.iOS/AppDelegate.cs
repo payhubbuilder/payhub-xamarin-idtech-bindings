@@ -4,6 +4,7 @@ using System.Linq;
 
 using Foundation;
 using UIKit;
+using HockeyApp.iOS;
 
 namespace BindingTest.iOS
 {
@@ -22,10 +23,25 @@ namespace BindingTest.iOS
         //
         public override bool FinishedLaunching(UIApplication app, NSDictionary options)
         {
+			AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;;
+			var manager = BITHockeyManager.SharedHockeyManager;
+			manager.LogLevel = BITLogLevel.Debug;
+			manager.Configure("5a3f6903a7a047a2b6505441b1661e37");
+			manager.StartManager();
+			manager.Authenticator.AuthenticateInstallation(); // This line is obsolete in crash only builds
+
+			HockeyApp.MetricsManager.TrackEvent("FinishedLaunching called");
+
             global::Xamarin.Forms.Forms.Init();
             LoadApplication(new App());
 
             return base.FinishedLaunching(app, options);
         }
-    }
+
+		void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
+		{
+			HockeyApp.MetricsManager.TrackEvent("Native Exception Caught: " + e.ToString());
+
+		}
+	}
 }

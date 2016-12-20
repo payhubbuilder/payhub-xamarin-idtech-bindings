@@ -13,12 +13,18 @@ namespace BindingTest
     {
         ObservableCollection<LogEntry> logs = new ObservableCollection<LogEntry>();
 
-        public MainPage()
-        {
-            InitializeComponent();
-            lvLogs.ItemsSource = logs;
-            lvLogs.HasUnevenRows = true;
-            lvLogs.RowHeight = -1;
+		public MainPage()
+		{
+			InitializeComponent();
+			lvLogs.ItemsSource = logs;
+			lvLogs.HasUnevenRows = true;
+			lvLogs.RowHeight = -1;
+
+			logs.Add(new LogEntry() { Message = "Hit Initialize Button (Swipe can be plugged in or NOT plugged in for this step" });
+			logs.Add(new LogEntry() { Message = "If swiper is NOT plugged in, plug it in" });
+			logs.Add(new LogEntry() { Message = "After receiving \"Device Connected\" message, hit \"Swipe Card\"" });
+			logs.Add(new LogEntry() { Message = "Dialog will appear saying please swipe now" });
+			logs.Add(new LogEntry() { Message = "Swipe the card, and you should see swipe data returned in HEX" });
         }
 
         protected override void OnAppearing()
@@ -35,7 +41,6 @@ namespace BindingTest
             else
             {
                 ((App)App.Current).AddLogMessage("StartSwipeCard Successful");
-                ((App)App.Current).ShowLoadingDialog("Please swipe card now");
             }
         }
 
@@ -51,7 +56,11 @@ namespace BindingTest
                 ((App)App.Current).AddLogMessage("Initialize Successful");
             }
         }
-        
+
+		private void ClearLogs_Clicked(object sender, EventArgs e)
+		{
+			logs.Clear();
+		}
 
         public void AddLog(string msg)
         {

@@ -52,7 +52,8 @@
                 Clicked="SwipeCard_Clicked"/>
 
             <Button 
-                Text="Clear Log" />
+                Text="Clear Log"
+				Clicked="ClearLogs_Clicked"/>
             
         </StackLayout>
 
