@@ -115,11 +115,33 @@ namespace BindingTest.iOS
 
         void OnReceivedDataNotification(NSNotification obj)
         {
-			((App)App.Current).AddLogMessage("Received Card Swipe Data: " + obj?.Object?.ToString());
-			((App)App.Current).HideLoadingDialog();
+            ((App)App.Current).AddLogMessage("Received Card Swipe Data: " + obj?.Object?.ToString());
+            ((App)App.Current).HideLoadingDialog();
+
+            NSData data = (NSData)obj.Object;
+            UMCardData cardData = new UMCardData(data);
+
+            if (cardData != null)
+            {
+                ((App)App.Current).AddLogMessage("UnEncrypted Track1: " + cardData.Track1?.ToString());
+                ((App)App.Current).AddLogMessage("UnEncrypted Track2: " + cardData.Track2?.ToString());
+                ((App)App.Current).AddLogMessage("UnEncrypted Track3: " + cardData.Track3?.ToString());
+
+                if (cardData.IsEncrypted)
+                {
+                    ((App)App.Current).AddLogMessage("Encryption Type: " + (cardData.IsAesEncrypted ? "AES" : "TDES"));
+
+                    ((App)App.Current).AddLogMessage("KSN: " + cardData.KSN?.ToString());
+                    ((App)App.Current).AddLogMessage("Serial #: " + cardData.SerialNumber?.ToString());
+
+                    ((App)App.Current).AddLogMessage("Encrypted Track1: " + cardData.Track1_Encrypted?.ToString());
+                    ((App)App.Current).AddLogMessage("Encrypted Track2: " + cardData.Track2_Encrypted?.ToString());
+                    ((App)App.Current).AddLogMessage("Encrypted Track3: " + cardData.Track3_Encrypted?.ToString());
+                }
+            }
         }
 
-		void OnReceivedInvalidSwipeNotification(NSNotification obj)
+        void OnReceivedInvalidSwipeNotification(NSNotification obj)
 		{
 			((App)App.Current).AddLogMessage("INVALID SWIPE, PLEASE TRY AGAIN: " + obj.Object?.ToString());
 			((App)App.Current).HideLoadingDialog();
